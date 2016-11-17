@@ -1,0 +1,33 @@
+<div data-control="balloon-selector" class="control-balloon-selector">
+    <ul>
+        <?php foreach($calendars as $key => $calendar) {
+            echo '<li data-value="' . $calendar['slug'] . '" ';
+            if (isset($_GET['calendar']) && ($_GET['calendar'] == $calendar['slug'])) {
+                echo 'class="active"';
+            }
+            if ($key == 0 && empty($_GET['calendar'])) {
+                echo 'class="active"';
+            }
+            echo 'style="font-size: 100%;"><a href="?calendar=';
+            echo $calendar['slug'] . '" style="color:#fff;">' . $calendar['name'] . '</a></li>';
+        } ?>
+    </ul>
+
+    <input type="hidden" name="balloonValue" value="1" />
+</div>
+
+<div id='calendar' style="margin-top:20px;"></div>
+
+<?php foreach($assets_css as $css) {
+    echo '<link rel="stylesheet" href="' . $css . '">' . "\n";
+} ?>
+
+<?php foreach($assets_js as $js) {
+    echo '<script src="' . $js . '"></script>' . "\n";
+} ?>
+
+<script type="text/javascript">
+    var firstDay = '<?= $settings["firstDay"]; ?>';
+    var lang = '<?= App::getLocale(); ?>';
+    var timeFormat = '<?= $settings["timeFormat"]; ?>';
+</script>

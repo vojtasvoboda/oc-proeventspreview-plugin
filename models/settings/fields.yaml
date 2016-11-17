@@ -1,0 +1,21 @@
+fields:
+    type:
+        label: Calendar type
+        default: fullcalendaraggregated
+        required: true
+        type: dropdown
+    firstDay:
+        label: First day
+        default: "0"
+        comment: 0 for Sunday, 1 for Monday
+        type: text
+    timeFormat:
+        label: Day time format
+        default: "HH:mm"
+        type: text
+        comment: Default is HH:mm. For 12h format enter hh:mm.
+    showPastEvents:
+        label: Show past events
+        default: false
+        type: switch
+        comment: Switch to ON if you want to see past events
