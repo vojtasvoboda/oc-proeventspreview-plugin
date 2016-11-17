@@ -15,10 +15,10 @@ Before use be sure you have [ProEvents](http://octobercms.com/plugin/radiantweb-
 
 At `Backend > Settings > Misc > ProEvents Calendar` you can find calendar settings.
 
-## Your own calendar
+## Add your own calendar
 
-For add new calendar, copy file `/plugins/vojtasvoboda/proeventspreview/config/config.php` to 
-`/config/vojtasvoboda/proeventspreview/config.php` and add new calendar section by coping any other calendar.
+For adding new calendar, copy file `/plugins/vojtasvoboda/proeventspreview/config/config.php` to 
+`/config/vojtasvoboda/proeventspreview/config.php` and add new calendar section by coping any other section.
 
 For example I took second calendar and made a copy to:
 
@@ -38,7 +38,7 @@ For example I took second calendar and made a copy to:
 ],
 ```
 
-If you want only change seetings of fullCalendar, create copy of file `/plugins/vojtasvoboda/proeventspreview/widgets/fullcalendar/assets/js/fullcalendar_normal.js` to 
+If you want only change seetings of **fullCalendar**, create copy of file `/plugins/vojtasvoboda/proeventspreview/widgets/fullcalendar/assets/js/fullcalendar_normal.js` to 
 `/plugins/acme/site/widgets/fullcalendar/assets/js/fullcalendar_normal.js` and change this path in config above.
 
 Do you want to change whole logic of fetching data? Create copy of FullCalendar class and change it in config file.
