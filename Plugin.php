@@ -13,8 +13,8 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name' => 'ProEvents Preview',
-            'description' => 'Backend calendar preview for ProEvents plugin.',
+            'name' => 'vojtasvoboda.proeventspreview::lang.plugin_name',
+            'description' => 'vojtasvoboda.proeventspreview::lang.plugin_description',
             'author' => 'Vojta Svoboda',
             'icon' => 'icon-calendar-o',
         ];
@@ -35,7 +35,7 @@ class Plugin extends PluginBase
 
             $manager->addSideMenuItems('Radiantweb.Proevents', 'proevents', [
                 'calendar' => [
-                    'label' => 'Overview',
+                    'label' => 'vojtasvoboda.proeventspreview::lang.calendar_label',
                     'url' => Backend::url('vojtasvoboda/proeventspreview/calendar'),
                     'icon' => 'icon-calendar',
                     'permissions' => ['radiantweb.proevents.*'],
@@ -49,8 +49,8 @@ class Plugin extends PluginBase
     {
         return [
             'settings' => [
-                'label' => 'ProEvents Calendar',
-                'description' => 'Manage ProEvents preview calendar.',
+                'label' => 'vojtasvoboda.proeventspreview::lang.settings_label',
+                'description' => 'vojtasvoboda.proeventspreview::lang.settings_description',
                 'icon' => 'icon-calendar',
                 'class' => 'VojtaSvoboda\ProEventsPreview\Models\Settings',
                 'order' => 200,
