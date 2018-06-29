@@ -52,7 +52,7 @@ class FullCalendar extends WidgetBase
     public function onGetMonthEvents()
     {
         $showPastEvents = Settings::get('showPastEvents', false);
-        $timezone = Lang::get('vojtasvoboda.proeventspreview::lang.timezone');
+        $timezone = config('cms.backendTimezone');
         $start = Carbon::createFromTimestamp(Request::get('start'), $timezone);
         $end = Carbon::createFromTimestamp(Request::get('end'), $timezone);
         $now = Carbon::now();
@@ -75,10 +75,8 @@ class FullCalendar extends WidgetBase
         $events = $eventsModel->getFromToCalendarEvents($start->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s'), "(calendar_id = '$calendar_id')");
 
         // hide events already started
-        if (!$showPastEvents)
-        {
-            foreach($events as $key => $event)
-            {
+        if (!$showPastEvents) {
+            foreach ($events as $key => $event) {
                 $date = $event->date;
                 if ($date != $now->format('Y-m-d')) {
                     continue;
@@ -101,14 +99,18 @@ class FullCalendar extends WidgetBase
         return json_encode($event_item);
     }
 
+    /**
+     * @param $events
+     * @return array
+     * @see https://v4-alpha.getbootstrap.com/utilities/colors/
+     */
     private function getEventsAggregated($events)
     {
         $days = [];
         $colorAvailable = '#1ea362';
         $colorBooked = '#b1071f';
 
-        foreach ($events as $event)
-        {
+        foreach ($events as $event) {
             $date = $event->date;
             if (!isset($days[$date])) {
                 $days[$date] = 0;
@@ -118,10 +120,11 @@ class FullCalendar extends WidgetBase
             }
         }
 
+        $timezone = config('cms.backendTimezone');
+
         $events = [];
         $index = 0;
-        foreach($days as $key => $day)
-        {
+        foreach ($days as $key => $day) {
             if ($day == 0) {
                 $title = Lang::get('vojtasvoboda.proeventspreview::lang.fully_booked');
 
@@ -139,8 +142,8 @@ class FullCalendar extends WidgetBase
                 'id' => $index++,
                 'title' => $title,
                 'allDay' => true,
-                'start' => $key . 'T' . '09:00:00+02:00',
-                'end' => $key . 'T' . '17:00:00+02:00',
+                'start' => Carbon::createFromFormat('Y-m-d H:i:s', $key . ' 09:00:00', $timezone)->toIso8601String(),
+                'end' => Carbon::createFromFormat('Y-m-d H:i:s', $key . ' 17:00:00', $timezone)->toIso8601String(),
                 'color' => $day > 0 ? $colorAvailable : $colorBooked,
                 'url' => '#',
                 'className' => 'larger ' . ($day > 0 ? 'available' : 'booked'),
@@ -150,6 +153,11 @@ class FullCalendar extends WidgetBase
         return $events;
     }
 
+    /**
+     * @param $events
+     * @return array
+     * @see https://v4-alpha.getbootstrap.com/utilities/colors/
+     */
     private function getEventsAsCalendarEvents($events)
     {
         $event_item  = [];
@@ -157,8 +165,7 @@ class FullCalendar extends WidgetBase
         $colorAvailable = '#1ea362';
         $colorBooked = '#b1071f';
 
-        foreach ($events as $event)
-        {
+        foreach ($events as $event) {
             $temp_event_array = [];
             $path = '';
 
@@ -191,7 +198,7 @@ class FullCalendar extends WidgetBase
              * else proceed as normal
              */
             if ($temp_event_count > 0) {
-                $end_date = $temp_event_array[ ($temp_event_count - 1) ];
+                $end_date = $temp_event_array[$temp_event_count - 1];
             } else {
                 $end_date = $event->date;
             }
@@ -201,7 +208,7 @@ class FullCalendar extends WidgetBase
              */
             if (!in_array($event->id, $skip_events)) {
                 $available = $event->status == 'available';
-                $event_item[] = array(
+                $event_item[] = [
                     'id' => $event->id,
                     'title' => $event->title,
                     'allDay' => $event->allday,
@@ -211,7 +218,7 @@ class FullCalendar extends WidgetBase
                     'url' => $path,
                     'description' => $event->excerpt,
                     'className' => $available ? 'available' : 'booked',
-                );
+                ];
             }
         }
 
