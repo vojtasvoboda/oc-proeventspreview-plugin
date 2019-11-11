@@ -77,7 +77,7 @@ class FullCalendar extends WidgetBase
         // hide events already started
         if (!$showPastEvents) {
             foreach ($events as $key => $event) {
-                $date = $event->date;
+                $date = isset($event->date) ? $event->date : $event->event_date;
                 if ($date != $now->format('Y-m-d')) {
                     continue;
                 }
@@ -111,7 +111,7 @@ class FullCalendar extends WidgetBase
         $colorBooked = '#b1071f';
 
         foreach ($events as $event) {
-            $date = $event->date;
+            $date = isset($event->date) ? $event->date : $event->event_date;
             if (!isset($days[$date])) {
                 $days[$date] = 0;
             }
@@ -200,7 +200,7 @@ class FullCalendar extends WidgetBase
             if ($temp_event_count > 0) {
                 $end_date = $temp_event_array[$temp_event_count - 1];
             } else {
-                $end_date = $event->date;
+                $end_date = isset($event->date) ? $event->date : $event->event_date;
             }
 
             /*
@@ -208,11 +208,12 @@ class FullCalendar extends WidgetBase
              */
             if (!in_array($event->id, $skip_events)) {
                 $available = $event->status == 'available';
+                $date = isset($event->date) ? $event->date : $event->event_date;
                 $event_item[] = [
                     'id' => $event->id,
                     'title' => $event->title,
                     'allDay' => $event->allday,
-                    'start' => $event->date . 'T' . $event->sttime . '+00:00',
+                    'start' => $date . 'T' . $event->sttime . '+00:00',
                     'end' => $end_date . 'T' . $event->entime . '+00:00',
                     'color' => $available ? $colorAvailable : $colorBooked,
                     'url' => $path,

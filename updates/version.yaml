@@ -2,3 +2,4 @@
 1.0.2: Add translations, thanks to @gergo85
 1.0.3: Fix using timezone
 1.0.4: Updated FullCalendar to the version 2.9.1
+1.0.5: Fix compatibility with Radiantweb.ProEvents 2.7.0+
